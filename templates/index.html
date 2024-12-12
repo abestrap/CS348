@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market</title>
+</head>
+<body>
+    <h3><a href="{{ url_for('show_all') }}">Stock Market</a></h3>
+    <h3>Stocks (<a href="{{ url_for('new') }}">Add Stock</a>)</h3>
+
+    <!-- Filter Form -->
+    <form method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Search by name">
+
+        <label for="industry">Industry:</label>
+        <input type="text" id="industry" name="industry" placeholder="Search by industry">
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <hr/>
+
+    <!-- Table of Stocks -->
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Industry</th>
+                <th>Div Yield</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock.name }}</td>
+                    <td>{{ stock.price }}</td>
+                    <td>{{ stock.industry }}</td>
+                    <td>{{ stock.div }}</td>
+                    <td>
+                        <a href="{{ url_for('edit', id=stock.id) }}">Edit</a> |
+                        <a href="{{ url_for('delete', id=stock.id) }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Statistics:</h3>
+    <p>Average Price: {{ avg_price }}</p>
+</body>
+</html>
